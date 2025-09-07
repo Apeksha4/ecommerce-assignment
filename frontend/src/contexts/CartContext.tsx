@@ -1,12 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  image: string;
-  category: string;
-}
+import { Product } from '../services/mockData';
 
 interface CartItem {
   product: Product;
@@ -53,10 +46,10 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
 
   const addToCart = (product: Product) => {
     setCartItems(prevItems => {
-      const existingItem = prevItems.find(item => item.product._id === product._id);
+      const existingItem = prevItems.find(item => item.product.id === product.id);
       if (existingItem) {
         return prevItems.map(item =>
-          item.product._id === product._id
+          item.product.id === product.id
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -67,7 +60,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
 
   const removeFromCart = (productId: string) => {
-    setCartItems(prevItems => prevItems.filter(item => item.product._id !== productId));
+    setCartItems(prevItems => prevItems.filter(item => item.product.id !== productId));
   };
 
   const updateQuantity = (productId: string, quantity: number) => {
@@ -76,7 +69,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
     } else {
       setCartItems(prevItems =>
         prevItems.map(item =>
-          item.product._id === productId
+          item.product.id === productId
             ? { ...item, quantity }
             : item
         )

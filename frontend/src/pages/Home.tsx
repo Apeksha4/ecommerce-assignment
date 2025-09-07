@@ -15,18 +15,8 @@ import {
   Chip
 } from '@mui/material';
 import { AddShoppingCart } from '@mui/icons-material';
-import axios from 'axios';
 import { useCart } from '../contexts/CartContext';
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  stock: number;
-}
+import { mockApi, Product } from '../services/mockData';
 
 const Home: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -43,8 +33,8 @@ const Home: React.FC = () => {
 
   const fetchProducts = async () => {
     try {
-      const response = await axios.get('/api/products');
-      setProducts(response.data);
+      const products = await mockApi.getProducts();
+      setProducts(products);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching products:', error);
@@ -112,7 +102,7 @@ const Home: React.FC = () => {
         gap: 3 
       }}>
         {filteredProducts.map((product) => (
-          <Card key={product._id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+          <Card key={product.id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
             <CardMedia
               component="img"
               height="200"

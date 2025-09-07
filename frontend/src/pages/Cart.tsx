@@ -48,7 +48,7 @@ const Cart: React.FC = () => {
       <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
         <Box sx={{ flex: 2 }}>
           {cartItems.map((item) => (
-            <Card key={item.product._id} sx={{ mb: 2 }}>
+            <Card key={item.product.id} sx={{ mb: 2 }}>
               <CardContent>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                   <CardMedia
@@ -72,7 +72,7 @@ const Cart: React.FC = () => {
                   <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <IconButton
-                        onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
+                        onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
                         disabled={item.quantity <= 1}
                       >
                         <Remove />
@@ -81,14 +81,14 @@ const Cart: React.FC = () => {
                         {item.quantity}
                       </Typography>
                       <IconButton
-                        onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
+                        onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
                       >
                         <Add />
                       </IconButton>
                     </Box>
                     <IconButton
                       color="error"
-                      onClick={() => removeFromCart(item.product._id)}
+                      onClick={() => removeFromCart(item.product.id)}
                     >
                       <Delete />
                     </IconButton>
