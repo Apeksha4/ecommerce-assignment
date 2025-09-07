@@ -8,7 +8,6 @@ import {
   CardMedia,
   IconButton,
   Button,
-  Grid,
   Divider
 } from '@mui/material';
 import { Add, Remove, Delete } from '@mui/icons-material';
@@ -46,22 +45,20 @@ const Cart: React.FC = () => {
         </Button>
       </Box>
 
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={8}>
+      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 3 }}>
+        <Box sx={{ flex: 2 }}>
           {cartItems.map((item) => (
             <Card key={item.product._id} sx={{ mb: 2 }}>
               <CardContent>
-                <Grid container spacing={2} alignItems="center">
-                  <Grid item xs={12} sm={3}>
-                    <CardMedia
-                      component="img"
-                      height="100"
-                      image={item.product.image}
-                      alt={item.product.name}
-                      sx={{ objectFit: 'cover', borderRadius: 1 }}
-                    />
-                  </Grid>
-                  <Grid item xs={12} sm={6}>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                  <CardMedia
+                    component="img"
+                    height="100"
+                    image={item.product.image}
+                    alt={item.product.name}
+                    sx={{ objectFit: 'cover', borderRadius: 1, width: 100 }}
+                  />
+                  <Box sx={{ flex: 1 }}>
                     <Typography variant="h6" gutterBottom>
                       {item.product.name}
                     </Typography>
@@ -71,43 +68,41 @@ const Cart: React.FC = () => {
                     <Typography variant="h6" color="primary" sx={{ mt: 1 }}>
                       ${item.product.price}
                     </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={3}>
-                    <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                      <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <IconButton
-                          onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
-                          disabled={item.quantity <= 1}
-                        >
-                          <Remove />
-                        </IconButton>
-                        <Typography variant="h6" sx={{ mx: 2 }}>
-                          {item.quantity}
-                        </Typography>
-                        <IconButton
-                          onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
-                        >
-                          <Add />
-                        </IconButton>
-                      </Box>
+                  </Box>
+                  <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    <Box sx={{ display: 'flex', alignItems: 'center' }}>
                       <IconButton
-                        color="error"
-                        onClick={() => removeFromCart(item.product._id)}
+                        onClick={() => updateQuantity(item.product._id, item.quantity - 1)}
+                        disabled={item.quantity <= 1}
                       >
-                        <Delete />
+                        <Remove />
+                      </IconButton>
+                      <Typography variant="h6" sx={{ mx: 2 }}>
+                        {item.quantity}
+                      </Typography>
+                      <IconButton
+                        onClick={() => updateQuantity(item.product._id, item.quantity + 1)}
+                      >
+                        <Add />
                       </IconButton>
                     </Box>
-                    <Typography variant="h6" sx={{ mt: 1, textAlign: 'center' }}>
-                      ${(item.product.price * item.quantity).toFixed(2)}
-                    </Typography>
-                  </Grid>
-                </Grid>
+                    <IconButton
+                      color="error"
+                      onClick={() => removeFromCart(item.product._id)}
+                    >
+                      <Delete />
+                    </IconButton>
+                  </Box>
+                  <Typography variant="h6" sx={{ minWidth: 80, textAlign: 'center' }}>
+                    ${(item.product.price * item.quantity).toFixed(2)}
+                  </Typography>
+                </Box>
               </CardContent>
             </Card>
           ))}
-        </Grid>
+        </Box>
 
-        <Grid item xs={12} md={4}>
+        <Box sx={{ flex: 1 }}>
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -150,8 +145,8 @@ const Cart: React.FC = () => {
               </Button>
             </CardContent>
           </Card>
-        </Grid>
-      </Grid>
+        </Box>
+      </Box>
     </Container>
   );
 };

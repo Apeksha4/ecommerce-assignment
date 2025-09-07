@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
   Container,
-  Grid,
   Card,
   CardContent,
   CardMedia,
@@ -103,45 +102,51 @@ const Home: React.FC = () => {
         </FormControl>
       </Box>
 
-      <Grid container spacing={3}>
+      <Box sx={{ 
+        display: 'grid', 
+        gridTemplateColumns: { 
+          xs: '1fr', 
+          sm: 'repeat(2, 1fr)', 
+          md: 'repeat(3, 1fr)' 
+        }, 
+        gap: 3 
+      }}>
         {filteredProducts.map((product) => (
-          <Grid item xs={12} sm={6} md={4} key={product._id}>
-            <Card sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
-              <CardMedia
-                component="img"
-                height="200"
-                image={product.image}
-                alt={product.name}
-                sx={{ objectFit: 'cover' }}
+          <Card key={product._id} sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
+            <CardMedia
+              component="img"
+              height="200"
+              image={product.image}
+              alt={product.name}
+              sx={{ objectFit: 'cover' }}
+            />
+            <CardContent sx={{ flexGrow: 1 }}>
+              <Typography gutterBottom variant="h6" component="h2">
+                {product.name}
+              </Typography>
+              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                {product.description}
+              </Typography>
+              <Chip 
+                label={product.category} 
+                size="small" 
+                sx={{ mb: 1 }}
               />
-              <CardContent sx={{ flexGrow: 1 }}>
-                <Typography gutterBottom variant="h6" component="h2">
-                  {product.name}
-                </Typography>
-                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                  {product.description}
-                </Typography>
-                <Chip 
-                  label={product.category} 
-                  size="small" 
-                  sx={{ mb: 1 }}
-                />
-                <Typography variant="h6" color="primary" sx={{ mb: 2 }}>
-                  ${product.price}
-                </Typography>
-                <Button
-                  variant="contained"
-                  startIcon={<AddShoppingCart />}
-                  onClick={() => handleAddToCart(product)}
-                  fullWidth
-                >
-                  Add to Cart
-                </Button>
-              </CardContent>
-            </Card>
-          </Grid>
+              <Typography variant="h6" color="primary" sx={{ mb: 2 }}>
+                ${product.price}
+              </Typography>
+              <Button
+                variant="contained"
+                startIcon={<AddShoppingCart />}
+                onClick={() => handleAddToCart(product)}
+                fullWidth
+              >
+                Add to Cart
+              </Button>
+            </CardContent>
+          </Card>
         ))}
-      </Grid>
+      </Box>
       
       {filteredProducts.length === 0 && (
         <Typography variant="h6" textAlign="center" sx={{ mt: 4 }}>
